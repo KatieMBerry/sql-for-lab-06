@@ -22,7 +22,7 @@ async function run() {
                     name VARCHAR(512) NOT NULL,
                     strength INTEGER NOT NULL,
                     alcohol_type VARCHAR(512) NOT NULL,
-                    hot_drink VARCHAR(512) NOT NULL,
+                    hot_drink BOOLEAN NOT NULL,
                     owner_id INTEGER NOT NULL REFERENCES users(id)
             );
         `);
