@@ -71,5 +71,4 @@ module.exports = [
     alcohol_type: 'aperitivo',
     hot_drink: true,
   }
-
 ];

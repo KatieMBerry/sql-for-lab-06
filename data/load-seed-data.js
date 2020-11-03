@@ -28,7 +28,7 @@ async function run() {
       cocktails.map(cocktail => {
         return client.query(`
                     INSERT INTO cocktails (name, strength, alcohol_type, hot_drink, owner_id)
-                    VALUES ($1, $2, $3);
+                    VALUES ($1, $2, $3, $4, $5);
                 `,
           [cocktail.name, cocktail.strength, cocktail.alcohol_type, cocktail.hot_drink, user.id]);
       })
