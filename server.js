@@ -6,9 +6,9 @@ const client = require('./lib/client');
 
 const PORT = process.env.PORT || 3000;
 
-// app.get('/', (req, res) => {
-//   res.send('Helloooooo World!');
-// });
+app.get('/', (req, res) => {
+  res.send('Helloooooo World!');
+});
 
 
 app.get('/cocktails', async (req, res) => {
