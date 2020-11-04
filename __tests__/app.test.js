@@ -29,7 +29,7 @@ describe('app routes', () => {
       return client.end(done);
     });
 
-    test('returns cocktails', async () => {
+    test('returns all cocktails', async () => {
 
       const expectation = [
         {
@@ -166,6 +166,7 @@ describe('app routes', () => {
         hot_drink: false,
         owner_id: 1
       };
+
       const data = await fakeRequest(app)
         .post('/cocktails')
         .send({
@@ -187,29 +188,49 @@ describe('app routes', () => {
       expect(allCocktails.body.length).toEqual(13);//use .length since endpoint adds a new row to see the data has been added to the array
     });
 
-    test.only('updates a cocktail id to the database and returns it', async () => {
-      const expectation = {
-        id: 13,
-        name: 'negroni',
-        strength: 9,
-        alcohol_type: 'aperitivo',
+    test('updates a cocktail with id 1 to the database and returns it', async () => {
+
+      const updatedCocktail = {
+        id: 1,
+        name: 'gin_and_juicey',
+        strength: 8,
+        alcohol_type: 'gin',
         hot_drink: false,
         owner_id: 1
       };
+
       const data = await fakeRequest(app)
-        .put('/cocktails/13')
-        .send({
-          name: 'negroni',
-          strength: 9,
-          alcohol_type: 'aperitivo',
-          hot_drink: false,
-          owner_id: 1
-        })
-        .get('/cocktails/13')//returns data
+        .put('/cocktails/1')
+        .send(updatedCocktail)
         .expect('Content-Type', /json/)
         .expect(200);
 
-      expect(data.body).toEqual(expectation);
+      expect(data.body).toEqual(updatedCocktail);
+    });
+
+    test.only('deletes a cocktail with id 1 from the database and returns the new array', async () => {
+
+      const expectation = {
+        id: 2,
+        name: 'dirty_martini',
+        strength: 9,
+        alcohol_type: 'gin',
+        hot_drink: false,
+        owner_id: 1
+      };
+
+      const deletedCocktail = await fakeRequest(app)
+        .delete('/cocktails/2')
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      const allCocktails = await fakeRequest(app)
+        .get('/cocktails')//returns data
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(deletedCocktail.body).toEqual(expectation);
+      expect(allCocktails.body.length).toEqual(11);
     });
   });
 });
