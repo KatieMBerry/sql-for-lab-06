@@ -1,7 +1,5 @@
 require('dotenv').config();
-
 const { execSync } = require('child_process');
-
 const fakeRequest = require('supertest');
 const app = require('../lib/app');
 const client = require('../lib/client');
@@ -9,56 +7,209 @@ const client = require('../lib/client');
 describe('app routes', () => {
   describe('routes', () => {
     let token;
-  
+
     beforeAll(async done => {
       execSync('npm run setup-db');
-  
+
       client.connect();
-  
+
       const signInData = await fakeRequest(app)
         .post('/auth/signup')
         .send({
           email: 'jon@user.com',
           password: '1234'
         });
-      
+
       token = signInData.body.token;
-  
+
       return done();
     });
-  
+
     afterAll(done => {
       return client.end(done);
     });
 
-  test('returns animals', async() => {
+    test('returns cocktails', async () => {
 
-    const expectation = [
-      {
-        'id': 1,
-        'name': 'bessie',
-        'coolfactor': 3,
-        'owner_id': 1
-      },
-      {
-        'id': 2,
-        'name': 'jumpy',
-        'coolfactor': 4,
-        'owner_id': 1
-      },
-      {
-        'id': 3,
-        'name': 'spot',
-        'coolfactor': 10,
-        'owner_id': 1
-      }
-    ];
+      const expectation = [
+        {
+          id: 1,
+          name: 'gin_and_juicey',
+          strength: 7,
+          alcohol_type: 'gin',
+          hot_drink: false,
+          owner_id: 1
+        },
+        {
+          id: 2,
+          name: 'dirty_martini',
+          strength: 9,
+          alcohol_type: 'gin',
+          hot_drink: false,
+          owner_id: 1
+        },
+        {
+          id: 3,
+          name: 'gin_fizz',
+          strength: 8,
+          alcohol_type: 'gin',
+          hot_drink: false,
+          owner_id: 1
+        },
+        {
+          id: 4,
+          name: 'mulled_gin_punch',
+          strength: 8,
+          alcohol_type: 'gin',
+          hot_drink: true,
+          owner_id: 1
+        },
+        {
+          id: 5,
+          name: 'jack_and_coke',
+          strength: 6,
+          alcohol_type: 'whiskey',
+          hot_drink: false,
+          owner_id: 1
+        },
+        {
+          id: 6,
+          name: 'whiskey_ginger',
+          strength: 6,
+          alcohol_type: 'whiskey',
+          hot_drink: false,
+          owner_id: 1
+        },
+        {
+          id: 7,
+          name: 'whiskey_sour',
+          strength: 8,
+          alcohol_type: 'whiskey',
+          hot_drink: false,
+          owner_id: 1
+        },
+        {
+          id: 8,
+          name: 'hot_toddy',
+          strength: 7,
+          alcohol_type: 'whiskey',
+          hot_drink: true,
+          owner_id: 1
+        },
+        {
+          id: 9,
+          name: 'aperol_spritz',
+          strength: 6,
+          alcohol_type: 'aperitivo',
+          hot_drink: false,
+          owner_id: 1
+        },
+        {
+          id: 10,
+          name: 'fernet_and_coke',
+          strength: 8,
+          alcohol_type: 'aperitivo',
+          hot_drink: false,
+          owner_id: 1
+        },
+        {
+          id: 11,
+          name: 'hugo',
+          strength: 6,
+          alcohol_type: 'aperitivo',
+          hot_drink: false,
+          owner_id: 1
+        },
+        {
+          id: 12,
+          name: 'hot_vermouth_tea',
+          strength: 5,
+          alcohol_type: 'aperitivo',
+          hot_drink: true,
+          owner_id: 1
+        }
+      ];
 
-    const data = await fakeRequest(app)
-      .get('/animals')
-      .expect('Content-Type', /json/)
-      .expect(200);
+      const data = await fakeRequest(app)
+        .get('/cocktails')
+        .expect('Content-Type', /json/)
+        .expect(200);
 
-    expect(data.body).toEqual(expectation);
+      expect(data.body).toEqual(expectation);
+    });
+
+
+    test('returns a single cocktail', async () => {
+      const expectation = {
+        id: 3,
+        name: 'gin_fizz',
+        strength: 8,
+        alcohol_type: 'gin',
+        hot_drink: false,
+        owner_id: 1
+      };
+
+      const data = await fakeRequest(app)
+        .get('/cocktails/3')
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(data.body).toEqual(expectation);
+    });
+
+    test('adds a cocktail to the database and returns it', async () => {
+      const expectation = {
+        id: 13,
+        name: 'negroni',
+        strength: 9,
+        alcohol_type: 'aperitivo',
+        hot_drink: false,
+        owner_id: 1
+      };
+      const data = await fakeRequest(app)
+        .post('/cocktails')
+        .send({
+          name: 'negroni',
+          strength: 9,
+          alcohol_type: 'aperitivo',
+          hot_drink: false,
+          owner_id: 1
+        })
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      const allCocktails = await fakeRequest(app)
+        .get('/cocktails')//returns data
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(data.body).toEqual(expectation);
+      expect(allCocktails.body.length).toEqual(13);//use .length since endpoint adds a new row to see the data has been added to the array
+    });
+
+    test.only('updates a cocktail id to the database and returns it', async () => {
+      const expectation = {
+        id: 13,
+        name: 'negroni',
+        strength: 9,
+        alcohol_type: 'aperitivo',
+        hot_drink: false,
+        owner_id: 1
+      };
+      const data = await fakeRequest(app)
+        .put('/cocktails/13')
+        .send({
+          name: 'negroni',
+          strength: 9,
+          alcohol_type: 'aperitivo',
+          hot_drink: false,
+          owner_id: 1
+        })
+        .get('/cocktails/13')//returns data
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(data.body).toEqual(expectation);
+    });
   });
 });
