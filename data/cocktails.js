@@ -1,97 +1,97 @@
 module.exports = [
   {
     id: 1,
-    name: 'gin_and_juicey',
+    name: 'Gin and Juicey',
     strength: 7,
-    alcohol_type: 'gin',
+    alcohol_id: 1,
     hot_drink: false,
     owner_id: 1
   },
   {
     id: 2,
-    name: 'dirty_martini',
+    name: 'Dirty Martini',
     strength: 9,
-    alcohol_type: 'gin',
+    alcohol_id: 1,
     hot_drink: false,
     owner_id: 1
   },
   {
     id: 3,
-    name: 'gin_fizz',
+    name: 'Gin Fizz',
     strength: 8,
-    alcohol_type: 'gin',
+    alcohol_id: 1,
     hot_drink: false,
     owner_id: 1
   },
   {
     id: 4,
-    name: 'mulled_gin_punch',
+    name: 'Mulled Gin Punch',
     strength: 8,
-    alcohol_type: 'gin',
+    alcohol_id: 1,
     hot_drink: true,
     owner_id: 1
   },
   {
     id: 5,
-    name: 'jack_and_coke',
+    name: 'Jack and Coke',
     strength: 6,
-    alcohol_type: 'whiskey',
+    alcohol_id: 2,
     hot_drink: false,
     owner_id: 1
   },
   {
     id: 6,
-    name: 'whiskey_ginger',
+    name: 'Whiskey Ginger',
     strength: 6,
-    alcohol_type: 'whiskey',
+    alcohol_id: 2,
     hot_drink: false,
     owner_id: 1
   },
   {
     id: 7,
-    name: 'whiskey_sour',
+    name: 'Whiskey Sour',
     strength: 8,
-    alcohol_type: 'whiskey',
+    alcohol_id: 2,
     hot_drink: false,
     owner_id: 1
   },
   {
     id: 8,
-    name: 'hot_toddy',
+    name: 'Hot Toddy',
     strength: 7,
-    alcohol_type: 'whiskey',
+    alcohol_id: 2,
     hot_drink: true,
     owner_id: 1
   },
   {
     id: 9,
-    name: 'aperol_spritz',
+    name: 'Aperol Spritz',
     strength: 6,
-    alcohol_type: 'aperitivo',
+    alcohol_id: 3,
     hot_drink: false,
     owner_id: 1
   },
   {
     id: 10,
-    name: 'fernet_and_coke',
+    name: 'Fernet and Coke',
     strength: 8,
-    alcohol_type: 'aperitivo',
+    alcohol_id: 3,
     hot_drink: false,
     owner_id: 1
   },
   {
     id: 11,
-    name: 'hugo',
+    name: 'Hugo',
     strength: 6,
-    alcohol_type: 'aperitivo',
+    alcohol_id: 3,
     hot_drink: false,
     owner_id: 1
   },
   {
     id: 12,
-    name: 'hot_vermouth_tea',
+    name: 'Hot Vermouth Tea',
     strength: 5,
-    alcohol_type: 'aperitivo',
+    alcohol_id: 3,
     hot_drink: true,
     owner_id: 1
   }
