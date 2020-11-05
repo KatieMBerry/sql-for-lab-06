@@ -16,15 +16,19 @@ async function run() {
                     id SERIAL PRIMARY KEY,
                     email VARCHAR(256) NOT NULL,
                     hash VARCHAR(512) NOT NULL
-                );           
+                ); 
+                CREATE TABLE alcohols (
+                  id SERIAL PRIMARY KEY,
+                  type VARCHAR(256) NOT NULL
+              );             
                 CREATE TABLE cocktails (
                     id SERIAL PRIMARY KEY NOT NULL,
                     name VARCHAR(512) NOT NULL,
-                    strength INTEGER NOT NULL,
-                    alcohol_type VARCHAR(512) NOT NULL,
+                    strength INTEGER NOT NULL, 
+                    alcohol_id INTEGER REFERENCES alcohols(id),
                     hot_drink BOOLEAN NOT NULL,
                     owner_id INTEGER NOT NULL REFERENCES users(id)
-            );
+            );        
         `);
 
     console.log('create tables complete', getEmoji(), getEmoji(), getEmoji());
