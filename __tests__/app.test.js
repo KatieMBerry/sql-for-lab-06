@@ -212,7 +212,7 @@ describe('app routes', () => {
       expect(data.body).toEqual(updatedCocktail);
     });
 
-    test.only('deletes a cocktail with id 1 from the database and returns the deleted item', async () => {
+    test('deletes a cocktail with id 2 from the database and returns the deleted item', async () => {
 
       const expectation = {
         id: 2,
@@ -234,7 +234,7 @@ describe('app routes', () => {
         .expect(200);
 
       expect(deletedCocktail.body).toEqual(expectation);
-      expect(allCocktails.body.length).toEqual(11);
+      expect(allCocktails.body.length).toEqual(12);
     });
   });
 });
